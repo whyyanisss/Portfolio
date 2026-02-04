@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanis Slimani | Portfolio</title>
+    
+    <!-- Favicon (Icône d'onglet) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
+    <!-- Polices Modernes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-body: #050505;
+            --bg-sidebar: rgba(20, 20, 20, 0.6);
+            --bg-card: rgba(30, 30, 30, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --primary: #7d3bf6; 
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --glass: blur(20px);
+            --success: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* --- MASQUER LES SCROLLBARS (Look Application) --- */
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden; 
+        }
+
+        /* --- LAYOUT GLOBAL --- */
+        .app-container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 400px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border);
+            background: var(--bg-sidebar);
+            backdrop-filter: var(--glass);
+            overflow-y: auto; 
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .profile-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+            background: linear-gradient(to right, #ffffff, #7d3bf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .profile-header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .bio {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Sections Info */
+        .info-section { margin-bottom: 2rem; }
+        .info-title {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-muted); font-weight: 700; margin-bottom: 10px;
+            display: block; opacity: 0.8;
+        }
+
+        /* Liste Compétences */
+        .skills-list {
+            list-style: none;
+            display: grid; grid-template-columns: 1fr; gap: 8px;
+        }
+        .skill-item {
+            font-size: 0.85rem; color: #e4e4e7;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .skill-item i { color: var(--primary); font-size: 0.9rem; width: 20px; text-align: center; }
+
+        /* Liste Langues (Alignement Centré) */
+        .lang-list { 
+            display: flex; 
+            gap: 8px; 
+            justify-content: space-between;
+        }
+        .lang-item {
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; /* Centre verticalement le contenu */
+            font-size: 0.85rem; color: #e4e4e7;
+            background: rgba(255,255,255,0.03); 
+            padding: 8px 4px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            min-height: 50px; /* Hauteur minimale pour uniformiser */
+        }
+        .lang-level {
+            font-family: 'JetBrains Mono'; font-size: 0.75rem;
+            color: var(--primary); font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* Timeline CV */
+        .timeline {
+            position: relative;
+            padding-left: 15px;
+            border-left: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .timeline-item { margin-bottom: 1.5rem; position: relative; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -19px; top: 6px;
+            width: 7px; height: 7px; background: var(--bg-body);
+            border: 1px solid var(--text-muted); border-radius: 50%;
+        }
+        .t-school { font-weight: 600; font-size: 0.95rem; color: white; display: block; }
+        .t-date { font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Boutons Contact (Alignement 3 sur 1 ligne) */
+        .contact-group { 
+            display: flex; 
+            flex-direction: row; 
+            gap: 8px; 
+            margin-top: auto; 
+            padding-top: 1rem; 
+        }
+        
+        .btn-sidebar {
+            flex: 1; /* Distribution équitable */
+            height: 44px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            border-radius: 8px; transition: 0.3s;
+            text-decoration: none; font-size: 0.85rem; font-weight: 600;
+            padding: 0 5px;
+        }
+
+        .btn-icon {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: var(--text-muted); 
+        }
+        .btn-icon:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .btn-cv-download {
+            background: var(--text-main); color: black; border: none;
+        }
+        .btn-cv-download:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,255,255,0.2); }
+
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex-grow: 1;
+            padding: 3rem;
+            overflow-y: auto; 
+            position: relative;
+            height: 100%;
+        }
+
+        .section-title {
+            font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::after {
+            content: ''; flex-grow: 1; height: 1px; background: var(--border);
+        }
+
+        /* GRILLE BENTO */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 220px; 
+            gap: 20px;
+            padding-bottom: 3rem;
+            grid-auto-flow: dense;
+        }
+
+        .card-lg { grid-column: span 2; grid-row: span 2; }
+        .card-wide { grid-column: span 2; }
+        .card-tall { grid-row: span 2; }
+
+        /* CARTE PROJET */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            --project-color: var(--primary); 
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        .card-visual {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            font-size: 3rem;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+        
+        .card-lg .card-visual { font-size: 6rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 60%); }
+        
+        .project-card:hover .card-visual { 
+            color: var(--project-color); 
+            transform: scale(1.05); 
+        }
+        .card-lg:hover .card-visual { transform: scale(1.1); }
+
+        .card-info {
+            padding: 1.5rem;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); }
+        .card-lg .card-title { font-size: 1.8rem; margin-bottom: 0.8rem; }
+
+        .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag {
+            font-size: 0.7rem; font-family: 'JetBrains Mono';
+            padding: 4px 8px; border-radius: 4px;
+            background: rgba(255,255,255,0.05); color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .project-card:hover .tag {
+            border-color: var(--project-color);
+            color: var(--text-main);
+        }
+
+        .click-hint {
+            position: absolute; top: 20px; right: 20px;
+            opacity: 0; transform: translateX(-10px); transition: 0.3s;
+            font-size: 0.9rem; 
+            color: var(--project-color);
+            background: rgba(0,0,0,0.8);
+            padding: 5px 10px; border-radius: 20px; backdrop-filter: blur(4px);
+        }
+        .project-card:hover .click-hint { opacity: 1; transform: translateX(0); }
+
+
+        /* --- MODAL (OVERLAY) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+        .modal-content {
+            background: #0f0f11;
+            width: 90%; 
+            height: 90vh;
+            max-width: 1200px;
+            border-radius: 16px; border: 1px solid var(--border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(20,20,20,0.95);
+        }
+        .close-btn {
+            background: transparent; border: none; color: var(--text-muted);
+            font-size: 1.5rem; cursor: pointer; transition: 0.2s;
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .close-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
+
+        .modal-body { 
+            flex-grow: 1;
+            padding: 0;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Overlay */
+        .modal-sidebar-info {
+            width: 350px;
+            padding: 2.5rem;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+            background: #111;
+            flex-shrink: 0;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: block;
+            opacity: 0.9;
+        }
+
+        /* TEXTE NATUREL (Left Align) */
+        .modal-desc-text {
+            color: #d4d4d8; 
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .specs-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2.5rem;
+        }
+
+        .specs-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .specs-list li::before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .modal-pdf-container {
+            flex-grow: 1;
+            background: #18181b; 
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        iframe.pdf-viewer { width: 100%; height: 100%; border: none; }
+        
+        .no-pdf-msg {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 300px;
+        }
+        .no-pdf-msg i { display: block; margin-bottom: 1rem; opacity: 0.3; }
+
+        .btn-outline {
+            padding: 12px 20px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px;
+            text-decoration: none; 
+            color: var(--text-main); 
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s; 
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; 
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.02);
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: rgba(59, 130, 246, 0.05); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .app-container { flex-direction: column; height: auto; overflow: visible; }
+            .sidebar { width: 100%; height: auto; padding: 2rem; }
+            .main-content { overflow: visible; height: auto; padding-bottom: 60px; }
+            body { overflow-y: auto; }
+            
+            .projects-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
+            .card-lg, .card-wide, .card-tall { grid-column: auto; grid-row: auto; }
+            
+            .modal-body { flex-direction: column; overflow-y: auto; }
+            .modal-sidebar-info { width: 100%; border-right: none; border-bottom: 1px solid var(--border); height: auto; padding: 1.5rem; }
+            .modal-pdf-container { height: 500px; flex-shrink: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- SIDEBAR GAUCHE (Ordre Reorganisé) -->
+        <aside class="sidebar">
+
+            <!-- 1. HEADER (Profil) -->
+            <div class="profile-header">
+                <h1>SLIMANI Yanis</h1>
+                <h2>Étudiant Licence EEA</h2>
+            </div>
+            
+            <p class="bio">
+                Je souhaite orienter ma carrière vers l'ingénierie des systèmes embarqués. Je développe une expertise en FPGA et conception analogique-numérique.
+            </p>
+
+            <!-- 2. PARCOURS (Timeline) -->
+            <div class="info-section">
+                <span class="info-title">Parcours Académique</span>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="t-school">Sorbonne Université</span>
+                        <span class="t-date">2024 - 2026 | Licence EEA</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-school">IGEE (Ex ENELEC)</span>
+                        <span class="t-date">2022 - 2024 | Licence 1 & 2</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="t-school">Lycée DRIS Ahmed</span>
+                        <span class="t-date">2021 | Bac Génie Mécanique</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. COMPÉTENCES (Hard Skills) -->
+            <div class="info-section">
+                <span class="info-title">Compétences Techniques</span>
+                <ul class="skills-list">
+                    <li class="skill-item"><i class="fa-solid fa-microchip"></i> VHDL / Vivado</li>
+                    <li class="skill-item"><i class="fa-solid fa-bolt"></i> EAGLE / KiCad</li>
+                    <li class="skill-item"><i class="fa-solid fa-code"></i> C / ASM / Python</li>
+                    <li class="skill-item"><i class="fa-solid fa-wave-square"></i> LTSpice / Matlab</li>
+                </ul>
+            </div>
+
+            <!-- 4. LANGUES (Aligné grille) -->
+            <div class="info-section">
+                <span class="info-title">Langues</span>
+                <div class="lang-list">
+                    <div class="lang-item"><span>Français</span> <span class="lang-level">C2</span></div>
+                    <div class="lang-item"><span>Anglais</span> <span class="lang-level">B2</span></div>
+                    <div class="lang-item"><span>Arabe</span></div>
+                    <div class="lang-item"><span>Kabyle</span></div>
+                </div>
+            </div>
+
+            <!-- 5. CONTACT & CV (Aligné sur une ligne) -->
+            <div class="contact-group">
+                <a href="https://www.linkedin.com/in/yanis-slimani-88371425b/" target="_blank" class="btn-sidebar btn-icon">
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="mailto:Yanis.Slimani@etu.sorbonne-universite.fr" class="btn-sidebar btn-icon">
+                    <i class="fa-solid fa-envelope"></i> Email
+                </a>
+                <a href="SLIMANI_A1_CV.pdf" target="_blank" class="btn-sidebar btn-cv-download">
+                    <i class="fa-solid fa-download"></i> CV
+                </a>
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <div class="section-title">Projets Réalisés</div>
+
+            <div class="projects-grid">
+                
+                <!-- PROJET 1: BOLT-16 (Bleu Cyan) -->
+                <div class="project-card card-lg" onclick="openModal('bolt')" style="--project-color: #7d3bf6;">
+                    <div class="click-hint">Voir Datasheet <i class="fa-solid fa-eye"></i></div>
+                    <div class="card-visual"><i class="fa-solid fa-microchip"></i></div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">Processeur BOLT-16</div>
+                            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:10px;">
+                                Architecture 16-bits propriétaire complète : ALU, Contrôleur, UART.
+                            </p>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag" style="border-color:var(--primary); color:var(--primary)">FEATURED</span>
+                            <span class="tag">VHDL</span>
+                            <span class="tag">Architecture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 2: FPGA CONSOLE (Violet) -->
+                <div class="project-card" onclick="openModal('fpga')" style="--project-color: #465fef;">
+                    <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-visual"><i class="fa-solid fa-gamepad"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">Console FPGA</div>
+                        <div class="card-tags">
+                            <span class="tag">Vivado</span>
+                            <span class="tag">VHDL</span>
+                            <span class="tag">VGA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 3: COMPILER (Jaune/Vert Python) -->
+                <div class="project-card" onclick="openModal('compiler')" style="--project-color: #eab308;">
+                    <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-visual"><i class="fa-brands fa-python"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">Compilateur</div>
+                        <div class="card-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">ASM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 4: MIXER (Orange/Rouge) -->
+                <div class="project-card" onclick="openModal('audio')" style="--project-color: #f97316;">
+                    <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-visual"><i class="fa-solid fa-sliders"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">Mixage Audio</div>
+                        <div class="card-tags">
+                            <span class="tag">Analogique</span>
+                            <span class="tag">Filtres</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 5: CARDIO (Rouge Médical) -->
+                <div class="project-card" onclick="openModal('sensor')" style="--project-color: #ef4444;">
+                    <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-visual"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">Capteur Cardiaque</div>
+                        <div class="card-tags">
+                            <span class="tag">Instrumentation</span>
+                            <span class="tag">Signal</span>
+                            <span class="tag">Capteurs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 6: CTN (Nouveau - Vert) -->
+                <div class="project-card" onclick="openModal('ctn')" style="--project-color: #10b981;">
+                    <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-visual"><i class="fa-solid fa-temperature-half"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">Thermomètre CTN</div>
+                        <div class="card-tags">
+                            <span class="tag">Analogique</span>
+                            <span class="tag">Instrumentation</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL OVERLAY -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" style="font-size: 1.5rem;">Titre Projet</h2>
+                <button class="close-btn" onclick="closeModal(null, true)"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-sidebar-info">
+                    <div id="modalTags" class="card-tags" style="margin-bottom: 2rem;"></div>
+                    
+                    <span class="info-label">À propos</span>
+                    <p id="modalDesc" class="modal-desc-text"></p>
+                    
+                    <span class="info-label">Spécifications</span>
+                    <ul id="modalSpecs" class="specs-list"></ul>
+                    
+                    <div id="modalActions">
+                        <a href="#" class="btn-outline"><i class="fa-brands fa-github"></i> Code Source</a>
+                    </div>
+                </div>
+                <div class="modal-pdf-container" id="pdfContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const projectsData = {
+            'bolt': {
+                title: "Processeur BOLT-16",
+                tags: ["VHDL", "Architecture", "UART", "Assembly"],
+                desc: "Le projet BOLT-16 (Binary Operations Logic Translator) est la conception intégrale 'From Scratch' d'une architecture de microprocesseur 16 bits. L'objectif était de maîtriser le cycle complet de conception numérique. Il intègre une ALU supportant 16 opérations, une Unité de Contrôle à Machine à États (MAE) et un système d'I/O mappé en mémoire pour interagir avec le monde physique.",
+                specs: [
+                    "ALU 16-bits (Add, Sub, Mult, Logique, Shift)",
+                    "Bootloader UART propriétaire (9600 Bauds)",
+                    "Memory-Mapped GPIO (Adresses xFFE & xFFF)",
+                    "Architecture Harvard modifiée (RAM 8ko / ROM 131ko)",
+                    "Machine à États (Boot, Sleep, Fetch, Decode, Execute)"
+                ],
+                file: "Bolt16_Datasheet.pdf"
+            },
+            'fpga': {
+                title: "Console de Jeu FPGA",
+                tags: ["Vivado", "VHDL", "Basys 3"],
+                desc: "Conception d'une console de jeu vidéo complète sur carte FPGA Basys 3. Le projet implémente une architecture modulaire en VHDL pour la gestion de l'affichage VGA en temps réel (640x480) et la logique de jeu via des machines à états complexes. Gestion des entrées via encodeur rotatif (IP Rotary).",
+                specs: [
+                    "Résolution VGA 640x480 @ 60Hz",
+                    "Gestion IP Rotary Encoder (Entrée)",
+                    "Machine à états finis pour logique de jeu",
+                    "Validation par Testbench et matériel réel"
+                ],
+                file: null
+            },
+            'audio': {
+                title: "Console de Mixage Audio",
+                tags: ["Simulink", "Analogique", "Filtres"],
+                desc: "Conception et réalisation d'une table de mixage audio analogique et numérique. Le système combine une simulation Simulink avancée pour le traitement du signal (effets audio) et une réalisation physique de l'étage d'amplification de puissance pour le pilotage de haut-parleurs.",
+                specs: [
+                    "Équaliseur multi-bande (Graves, Médiums, Aigus)",
+                    "Effets DSP : Écho, Réverbération, Saturation",
+                    "Étude fréquentielle filtres numériques RIF/RII",
+                    "Chaîne d'amplification analogique custom"
+                ],
+                file: null
+            },
+            'sensor': {
+                title: "Capteur Cardiaque",
+                tags: ["Instrumentation", "Capteurs"],
+                desc: "Système complet de mesure biomédicale de la fréquence cardiaque. La chaîne d'acquisition traite le signal brut d'un capteur optique IR via un conditionnement analogique précis pour éliminer le bruit, suivi d'un comptage numérique des impulsions.",
+                specs: [
+                    "Conditionnement Analogique : Filtrage actif",
+                    "Comparateur à hystérésis pour stabilité",
+                    "Affichage dynamique double 7 segments",
+                    "Plage de mesure : 0-99 BPM"
+                ],
+                file: null
+            },
+            'compiler': {
+                title: "Compilateur Custom",
+                tags: ["Python", "Software"],
+                desc: "Outil logiciel critique développé en Python pour l'écosystème BOLT-16. Cette application sert de chaîne de compilation complète : elle traduit un pseudo-code de haut niveau vers l'Assembleur BOLT, puis génère le code machine binaire flashable via UART.",
+                specs: [
+                    "Traduction Pseudo-code -> Assembleur -> Binaire",
+                    "Génération automatique des headers UART",
+                    "Interface CLI pour l'intégration continue",
+                    "Support des instructions de saut et GPIO"
+                ],
+                file: null
+            },
+            'ctn': {
+                title: "Thermomètre CTN",
+                tags: ["Analogique", "Instrumentation", "Capteurs"],
+                desc: "Projet de conception d'un thermomètre électronique complet. Utilisation d'une thermistance à Coefficient de Température Négatif (CTN) intégrée dans un pont de mesure pour linéariser la réponse. Le signal est ensuite traité par un amplificateur d'instrumentation avant d'être converti pour un affichage numérique.",
+                specs: [
+                    "Capteur : Thermistance CTN",
+                    "Conditionnement : Pont de Wheatstone",
+                    "Amplification d'Instrumentation",
+                    "Affichage sur 7 segments"
+                ],
+                file: "CTN.pdf"
+            }
+        };
+
+        const modal = document.getElementById('modalOverlay');
+        const pdfContainer = document.getElementById('pdfContainer');
+
+        function openModal(projectId) {
+            const data = projectsData[projectId];
+            if(!data) return;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalDesc').innerText = data.desc;
+            document.getElementById('modalTags').innerHTML = data.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            document.getElementById('modalSpecs').innerHTML = data.specs.map(spec => `<li>${spec}</li>`).join('');
+
+            pdfContainer.innerHTML = ''; 
+
+            if (data.file) {
+                const iframe = document.createElement('iframe');
+                iframe.className = 'pdf-viewer';
+                iframe.src = data.file;
+                pdfContainer.appendChild(iframe);
+            } else {
+                pdfContainer.innerHTML = `
+                    <div class="no-pdf-msg">
+                        <i class="fa-regular fa-file-image" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>Aperçu indisponible</h3>
+                        <p>Il n'y a pas de document attaché à ce projet pour le moment.</p>
+                    </div>
+                `;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(e, force = false) {
+            if (force || e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                setTimeout(() => { pdfContainer.innerHTML = ''; }, 300);
+            }
+        }
+    </script>
+</body>
+</html>
