@@ -1,3 +1,6 @@
+<!-- ========================================== -->
+<!-- COLLE LE CODE DE TON PORTFOLIO JUSTE ICI   -->
+<!-- ========================================== -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -191,16 +194,17 @@
         }
         .section-title::after { content: ''; flex-grow: 1; height: 1px; background: var(--border); }
 
-        /* GRILLE BENTO 3x3 FIXE */
+        /* GRILLE BENTO (Adaptative avec Scroll) */
         .projects-grid {
             flex-grow: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr); 
+            grid-auto-rows: minmax(160px, 1fr); /* Rend la hauteur adaptative pour les nouvelles lignes */
             gap: 12px; 
-            overflow: hidden; 
-            padding-top: 10px; /* Marge interne pour l'ombre hover */
-            padding-bottom: 10px;
+            overflow-y: auto; /* Active le défilement vertical pour + de 3 lignes */
+            padding-top: 10px; 
+            padding-bottom: 30px;
+            padding-right: 5px; /* Évite que la scrollbar ne touche les cartes */
         }
 
         /* --- PLACEMENT 3x3 --- */
@@ -489,8 +493,9 @@
                     <div class="skill-tag" data-skill="casm"><i class="fa-solid fa-c"></i> C / ASM</div>
                     
                     <div class="skill-tag" data-skill="python"><i class="fa-brands fa-python"></i> Python</div>
-                    <div class="skill-tag" data-skill="ml"><i class="fa-solid fa-brain"></i> Deep Learning</div>
+                    <div class="skill-tag" data-skill="ml"><i class="fa-solid fa-brain"></i> Machine Learning</div>
                     <div class="skill-tag" data-skill="matlab"><i class="fa-solid fa-calculator"></i> Matlab</div>
+                    <div class="skill-tag" data-skill="telecom"><i class="fa-solid fa-tower-broadcast"></i> Télécoms / RF</div>
                     
                     <div class="skill-tag" data-skill="pcb"><i class="fa-solid fa-bolt"></i> PCB / KiCad</div>
                     <div class="skill-tag" data-skill="signal"><i class="fa-solid fa-wave-square"></i> Signal Processing</div>
@@ -657,6 +662,31 @@
                     </div>
                 </div>
 
+                <!-- 8. TELECOM BPSK (Nouveau Projet) -->
+                <div class="project-card" onclick="openModal('telecom')" 
+                     style="--project-color: #0ea5e9;"
+                     data-skills="matlab,telecom,signal">
+                    <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
+                    
+                    <a href="https://github.com/whyyanisss" target="_blank" class="card-github-link" onclick="event.stopPropagation();">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <div class="card-visual"><i class="fa-solid fa-satellite-dish"></i></div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">Chaîne BPSK</div>
+                            <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom:0.4rem; line-height:1.3;">
+                                Transmission RF sous Matlab (BER vs SNR).
+                            </p>
+                        </div>
+                        <div class="card-tags">
+                            <span class="tag">Matlab</span>
+                            <span class="tag">RF</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -797,6 +827,20 @@
                 files: ["assets/project shema_CTN.pdf", "assets/Mini_Projet-last_CTN.pdf"],
                 fileLabels: ["Schéma Électronique (KiCad)", "Rapport Complet & Mesures"],
                 github: null
+            },
+            'telecom': {
+                title: "Transmission Télécom BPSK",
+                tags: ["Matlab", "Télécommunications", "BPSK", "Traitement du Signal"],
+                desc: "Simulation complète d'une chaîne de transmission numérique BPSK sous Matlab (Projet Universitaire). Modélisation du signal en bande de base, modulation BPSK, transposition sur porteuse RF (1 MHz) et ajout de bruit blanc gaussien (AWGN). L'objectif était d'analyser la robustesse de la transmission via le tracé du taux d'erreur binaire (BER) en fonction du rapport signal sur bruit (SNR).",
+                specs: [
+                    "Génération et encodage BPSK du message binaire",
+                    "Transposition RF à 1 MHz et analyse spectrale (FFT)",
+                    "Simulation de canal bruité avec bruit AWGN",
+                    "Démodulation cohérente et restitution du signal",
+                    "Analyse des performances : Tracé de la courbe BER vs SNR"
+                ],
+                file: "assets/Projet_Telecom.pdf",
+                github: "https://github.com/whyyanisss"
             }
         };
 
@@ -979,5 +1023,3 @@
 </body>
 
 </html>
-
-
