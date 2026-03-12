@@ -191,31 +191,29 @@
         }
         .section-title::after { content: ''; flex-grow: 1; height: 1px; background: var(--border); }
 
-        /* GRILLE BENTO (Adaptative avec Scroll) */
+        /* GRILLE BENTO (Parfaitement Intégrée 3x3) */
         .projects-grid {
             flex-grow: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: minmax(160px, 1fr); /* Rend la hauteur adaptative pour les nouvelles lignes */
+            grid-template-rows: repeat(3, 1fr); /* Force 3 lignes égales */
             gap: 12px; 
-            overflow-y: auto; /* Active le défilement vertical pour + de 3 lignes */
-            padding-top: 10px; 
-            padding-bottom: 30px;
-            padding-right: 5px; /* Évite que la scrollbar ne touche les cartes */
+            padding-bottom: 10px;
         }
 
-        /* --- PLACEMENT 3x3 --- */
+        /* --- PLACEMENT AUTOMATIQUE --- 
+           On fixe seulement Bolt-16 pour qu'il prenne 2 lignes. 
+           Toutes les autres cartes (dont FPGA) se placeront automatiquement 
+           pour remplir parfaitement la grille 3x3 (8 cartes = 9 cases). 
+        */
         .card-bolt { grid-column: 1 / 2; grid-row: 1 / 3; }
-        .card-fpga { grid-column: 2 / 3; grid-row: 1 / 3; }
-        .card-ml { grid-column: 3 / 4; grid-row: 1 / 2; }
-        .card-compiler { grid-column: 3 / 4; grid-row: 2 / 3; }
 
         @media (max-width: 1000px) {
             .app-container { flex-direction: column; overflow-y: auto; }
             .sidebar { width: 100%; height: auto; padding: 1.5rem; }
             .main-content { height: auto; overflow: visible; }
-            .projects-grid { grid-template-columns: 1fr; grid-template-rows: auto; gap: 15px;}
-            .card-bolt, .card-fpga, .card-ml, .card-compiler { grid-column: span 1; grid-row: auto; }
+            .projects-grid { grid-template-columns: 1fr; grid-template-rows: auto; grid-auto-rows: minmax(160px, auto); gap: 15px;}
+            .card-bolt { grid-column: span 1; grid-row: auto; }
         }
 
         /* CARTE PROJET */
@@ -249,7 +247,8 @@
             transition: 0.3s;
         }
         
-        .card-bolt .card-visual, .card-fpga .card-visual { 
+        /* Seul Bolt-16 garde le style géant */
+        .card-bolt .card-visual { 
             font-size: 4rem; 
             background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 60%); 
         }
@@ -271,7 +270,9 @@
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             padding-right: 25px; 
         }
-        .card-bolt .card-title, .card-fpga .card-title { 
+        
+        /* Seul Bolt-16 garde le titre plus gros */
+        .card-bolt .card-title { 
             font-size: 1.2rem; margin-bottom: 0.4rem; white-space: normal; 
         }
 
@@ -548,8 +549,8 @@
                     </div>
                 </div>
 
-                <!-- 2. FPGA CONSOLE (Col 2, Ligne 1-2) -->
-                <div class="project-card card-fpga" onclick="openModal('fpga')" 
+                <!-- 2. FPGA CONSOLE -->
+                <div class="project-card" onclick="openModal('fpga')" 
                      style="--project-color: #465fef;"
                      data-skills="vhdl,fpga,vivado">
                     <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
@@ -572,8 +573,8 @@
                     </div>
                 </div>
 
-                <!-- 3. ML (Col 3, Ligne 1) -->
-                <div class="project-card card-ml" onclick="openModal('ml')" 
+                <!-- 3. ML -->
+                <div class="project-card" onclick="openModal('ml')" 
                      style="--project-color: #db2777;"
                      data-skills="python,ml">
                     <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
@@ -593,8 +594,8 @@
                     </div>
                 </div>
 
-                <!-- 4. COMPILATEUR (Col 3, Ligne 2) -->
-                <div class="project-card card-compiler" onclick="openModal('compiler')" 
+                <!-- 4. COMPILATEUR -->
+                <div class="project-card" onclick="openModal('compiler')" 
                      style="--project-color: #eab308;"
                      data-skills="python,casm">
                     <div class="click-hint">Détails <i class="fa-solid fa-arrow-right"></i></div>
@@ -614,7 +615,7 @@
                     </div>
                 </div>
 
-                <!-- 5. MIXER (Col 1, Ligne 3) -->
+                <!-- 5. MIXER -->
                 <div class="project-card" onclick="openModal('audio')" 
                      style="--project-color: #f97316;"
                      data-skills="signal,matlab,pcb">
@@ -629,7 +630,7 @@
                     </div>
                 </div>
 
-                <!-- 6. CARDIO (Col 2, Ligne 3) -->
+                <!-- 6. CARDIO -->
                 <div class="project-card" onclick="openModal('sensor')" 
                      style="--project-color: #ef4444;"
                      data-skills="signal,pspice,capture">
@@ -644,7 +645,7 @@
                     </div>
                 </div>
 
-                <!-- 7. CTN (Col 3, Ligne 3) -->
+                <!-- 7. CTN -->
                 <div class="project-card" onclick="openModal('ctn')" 
                      style="--project-color: #10b981;"
                      data-skills="pcb,signal,pspice,capture">
@@ -659,7 +660,7 @@
                     </div>
                 </div>
 
-                <!-- 8. TELECOM BPSK (Nouveau Projet) -->
+                <!-- 8. TELECOM BPSK -->
                 <div class="project-card" onclick="openModal('telecom')" 
                      style="--project-color: #0ea5e9;"
                      data-skills="matlab,telecom,signal">
@@ -1020,4 +1021,3 @@
 </body>
 
 </html>
-
